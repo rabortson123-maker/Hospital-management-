@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FRSPY Hospital</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+:root{--teal:#087f8c;--teal-dark:#056875;--navy:#102a43;--text:#34495e;--muted:#82929c;--line:#dfe9ee;--bg:#f5f9fc;--white:#fff;--green:#18965b}
+*{box-sizing:border-box}
+body{margin:0;font-family:"DM Sans",sans-serif;color:var(--navy);background:var(--bg)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.navbar{min-height:82px;background:white;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 6%;border-bottom:1px solid #e6eef3;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0}.logo-icon{width:42px;height:42px;border-radius:12px;background:var(--teal);color:white;display:grid;place-items:center;font-size:24px;font-weight:bold}.logo h2{margin:0;font-size:20px;letter-spacing:2px}.logo span{font-size:9px;letter-spacing:3px;color:#6b7c8a}
+.navbar nav{display:flex;gap:3px;flex-wrap:wrap}.navbar nav button{border:0;background:transparent;color:var(--navy);padding:10px 11px;font-weight:600}.navbar nav button:hover{color:var(--teal)}
+.nav-register,.primary-btn,.secondary-btn{border-radius:11px;padding:13px 19px;font-weight:700;border:0}.nav-register{background:var(--navy);color:white}.primary-btn{background:var(--teal);color:white}.primary-btn:hover{background:var(--teal-dark)}.secondary-btn{background:white;color:var(--navy);border:1px solid #dbe6ec}.full{width:100%}
+.hero{min-height:590px;padding:80px 8%;display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:center;background:radial-gradient(circle at 80% 30%,rgba(8,127,140,.12),transparent 35%),var(--bg)}
+.small-label{color:var(--teal);font-size:12px;font-weight:800;letter-spacing:2px}.hero h1{font-family:"Playfair Display",serif;font-size:clamp(44px,6vw,78px);line-height:1.04;margin:20px 0}.hero h1 span,.about h1 span{color:var(--teal)}.hero p{max-width:650px;font-size:17px;color:var(--text);line-height:1.8}.hero-buttons{display:flex;gap:14px;margin:30px 0}.hero-stats{display:flex;gap:32px;margin-top:35px;flex-wrap:wrap}.hero-stats div{display:flex;flex-direction:column;gap:5px}.hero-stats strong{font-size:25px}.hero-stats span{font-size:12px;color:var(--text)}
+.hero-card,.quick-section>div,.doctor-card,.service-card,.registration-option,.hospital-form,.registration-summary,.invoice-card,.payment-card,.donation-card,.success-card{background:white;border:1px solid var(--line);border-radius:22px}.hero-card{padding:42px;box-shadow:0 25px 60px #102a4318}.medical-cross{width:75px;height:75px;background:#e6f6f7;color:var(--teal);display:grid;place-items:center;border-radius:22px;font-size:42px}.hero-card h3{font-family:"Playfair Display",serif;font-size:34px}.hero-card p,.care-item{color:var(--text);line-height:1.7}.care-item{padding:14px 0;border-top:1px solid #edf1f3}.care-item span{color:var(--teal);margin-right:10px}
+.quick-section{padding:0 8% 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.quick-section>div{padding:28px}.quick-section span{color:var(--teal);font-weight:800}.quick-section p{color:var(--text);line-height:1.6}.text-btn{border:0;background:transparent;color:var(--teal);font-weight:700;padding:0}
+.page{padding:75px 8%;min-height:580px}.page-heading{max-width:750px;margin:0 auto 48px;text-align:center}.page-heading>span{color:var(--teal);font-size:12px;font-weight:800;letter-spacing:2px}.page-heading h1{font-family:"Playfair Display",serif;font-size:clamp(36px,5vw,54px);margin:14px 0}.page-heading p{color:var(--text);line-height:1.7;font-size:16px}
+.doctor-grid,.service-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.doctor-card,.service-card{padding:28px}.doctor-avatar{width:62px;height:62px;background:#e5f6f6;color:var(--teal);border-radius:50%;display:grid;place-items:center;font-size:24px;font-weight:800}.doctor-card h3{margin-bottom:8px}.doctor-card strong{color:var(--teal)}.doctor-card p,.service-card p{color:var(--text);line-height:1.7}.service-icon{font-size:34px}.about{padding:85px 8%;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.about h1{font-family:"Playfair Display",serif;font-size:clamp(38px,5vw,54px)}.about p{color:var(--text);line-height:1.8}.about-visual{min-height:350px;border-radius:30px;background:linear-gradient(135deg,#dff5f5,#eef9f9);display:grid;place-items:center}.big-cross{font-size:140px;color:var(--teal)}
+.registration-options{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.registration-option{text-align:left;padding:26px;transition:.2s}.registration-option:hover{border-color:var(--teal);transform:translateY(-3px)}.registration-option span{font-size:40px}.registration-option h2{font-size:21px;margin:20px 0 8px}.registration-option p{color:var(--text);min-height:60px;line-height:1.5}.registration-option strong{color:var(--teal)}
+.form-layout,.billing-layout{max-width:1120px;margin:auto;display:grid;grid-template-columns:1.55fr .8fr;gap:24px;align-items:start}.hospital-form,.registration-summary,.invoice-card,.payment-card,.donation-card{padding:30px}.form-title{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #e5edf1;padding-bottom:18px;margin-bottom:24px}.form-title strong{color:var(--teal)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.field{display:flex;flex-direction:column;gap:8px;margin-bottom:17px}.field label{font-size:13px;font-weight:700;color:#253b4d}.field input,.field select{width:100%;border:1px solid #d6e2e8;border-radius:10px;padding:12px;color:#172b3a;background:white;min-width:0}.field input:focus,.field select:focus{outline:2px solid #b5e2e5;border-color:var(--teal)}.medical-note{background:#f1f8f9;padding:16px;border-radius:12px;margin:20px 0}.medical-note p{color:var(--text);font-size:13px;line-height:1.6;margin-bottom:0}.summary-line{padding:14px 0;border-top:1px solid #e8eef1;display:flex;flex-direction:column;gap:5px;overflow-wrap:anywhere}.summary-line span,.patient-mini small{color:var(--muted);font-size:12px}
+.invoice-header{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #e4ebef;padding-bottom:20px;align-items:start}.invoice-header h2{font-size:20px}.invoice-header span{background:#e5f6f6;color:var(--teal);padding:8px 10px;border-radius:8px;font-size:12px;font-weight:700}.patient-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:17px;padding:20px 0}.patient-mini div{display:flex;flex-direction:column;gap:5px;overflow-wrap:anywhere}.charge-row{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:12px 0;border-bottom:1px solid #edf1f3}.charge-row label{font-size:14px}.charge-input{display:flex;align-items:center;border:1px solid #d7e3e8;border-radius:8px;flex-shrink:0}.charge-input span{padding-left:9px}.charge-input input{border:0;width:95px;padding:9px;background:transparent}.total-row{display:flex;justify-content:space-between;gap:10px;padding-top:22px;font-size:18px}.total-row strong{color:var(--teal)}.rate-note{font-size:12px;line-height:1.5;color:#6b7c8a;background:#f5f9fa;border-radius:10px;padding:12px;margin:16px 0}.payment-icon,.donation-symbol{width:60px;height:60px;border-radius:50%;background:#e6f6f6;color:var(--teal);display:grid;place-items:center;font-size:28px}.payment-summary{margin:20px 0;padding:16px;background:#f4f8fa;border-radius:12px}.payment-summary div{display:flex;justify-content:space-between;gap:12px;padding:8px 0}.payment-summary strong{overflow-wrap:anywhere}.status{font-weight:800}.status.paid{color:var(--green)}.status.partial{color:#b7791f}
+.success-page{min-height:650px;display:grid;place-items:center;padding:55px 20px}.success-card{max-width:680px;width:100%;text-align:center;padding:45px}.success-check{width:76px;height:76px;margin:0 auto 22px;border-radius:50%;background:#e1f7ec;color:var(--green);display:grid;place-items:center;font-size:40px}.transaction-box{margin:25px 0;background:#f1f8f9;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:8px}.transaction-box span{color:#7d8e99;font-size:12px}.transaction-box strong{color:var(--teal);font-size:20px;overflow-wrap:anywhere}.success-details{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #e6edf0;border-bottom:1px solid #e6edf0}.success-details div{padding:16px;display:flex;flex-direction:column;gap:8px;overflow-wrap:anywhere}.success-details span{font-size:12px;color:var(--text)}.success-buttons{display:flex;justify-content:center;gap:12px;margin-top:24px;flex-wrap:wrap}
+.receipt-page{background:#eef3f5}.receipt{max-width:850px;margin:auto;background:white;padding:42px}.receipt-top{display:flex;justify-content:space-between;gap:20px;border-bottom:2px solid var(--navy);padding-bottom:22px}.receipt-status{color:var(--green);border:1px solid var(--green);padding:7px 12px;height:max-content}.receipt-title{display:flex;justify-content:space-between;gap:20px;margin:25px 0}.receipt-title span{color:var(--teal);font-weight:bold;overflow-wrap:anywhere}.receipt-patient{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;background:#f5f9fa;padding:22px}.receipt-patient div{display:flex;flex-direction:column;gap:5px;overflow-wrap:anywhere}.receipt-patient small{color:#84949d}.receipt table{width:100%;border-collapse:collapse;margin:25px 0}.receipt th,.receipt td{padding:12px;border-bottom:1px solid #e4ebee;text-align:left}.receipt th:last-child,.receipt td:last-child{text-align:right}.receipt tfoot{background:#f5f9fa}.receipt-footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.receipt-footer div{display:flex;flex-direction:column;gap:5px}.receipt-footer span{color:var(--teal);overflow-wrap:anywhere}.receipt-message{text-align:center;padding:25px;color:#718492;line-height:1.8}.donation-card{max-width:500px;margin:auto}.donation-symbol{margin:auto}.donation-card h2{text-align:center;font-family:"Playfair Display",serif}
+footer{background:var(--navy);color:white;padding:40px 8%;display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}footer p{color:#d1dce3}
+@media(max-width:1000px){.navbar{flex-wrap:wrap}.navbar nav{order:3;width:100%;justify-content:center}.hero,.about,.form-layout,.billing-layout{grid-template-columns:1fr}.doctor-grid,.service-grid{grid-template-columns:repeat(2,1fr)}.registration-options{grid-template-columns:repeat(2,1fr)}.hero{gap:35px}.hero-card{max-width:600px}}
+@media(max-width:600px){.navbar{padding:12px 18px}.navbar nav{display:grid;grid-template-columns:repeat(3,1fr)}.navbar nav button{padding:8px 4px;font-size:13px}.nav-register{padding:10px 12px}.hero{padding:48px 23px}.hero-buttons,.success-buttons{flex-direction:column}.quick-section,.doctor-grid,.service-grid,.registration-options,.form-grid,.patient-mini,.receipt-patient,.success-details{grid-template-columns:1fr}.quick-section,.page,.about{padding-left:22px;padding-right:22px}.quick-section{padding-bottom:50px}.hero-card,.hospital-form,.registration-summary,.invoice-card,.payment-card,.donation-card,.success-card{padding:24px}.about{gap:30px}.receipt{padding:20px}.receipt-top,.receipt-title,.receipt-footer{flex-direction:column;gap:12px}.charge-row{align-items:flex-start}.charge-input input{width:75px}footer{flex-direction:column;padding:35px 22px}}
+@media print{body{background:white}.navbar,footer,.print-btn,.no-print{display:none!important}.page{padding:0;min-height:0}.receipt-page{background:white}.receipt{box-shadow:none;max-width:none;padding:15px}.receipt-message{padding:15px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+"use strict";
+
+/* DEMO PROJECT: sample rates only; no real payment gateway or secure database. */
+const doctors = [
+  ["Dr. Yaswanth kumar","Cardiology","12 Years Experience"],
+  ["Dr. Faizil","Internal Medicine","10 Years Experience"],
+  ["Dr. Rabort","Neurology","11 Years Experience"],
+  ["Dr. Sreenu","Orthopedics","11 Years Experience"],
+  ["Dr. Prudhvi teja","Emergency Medicine","10 Years Experience"]
+];
+
+const services = [
+  ["🏥","General Ward","Inpatient care with medical support."],
+  ["❤️","ICU","Intensive monitoring and critical care."],
+  ["🚑","Emergency Care","Emergency medical assistance."],
+  ["🧪","Diagnostics","Diagnostic services selected by a clinician."],
+  ["💊","Pharmacy","Prescribed medicines and healthcare products."],
+  ["🤖","AI Healthcare","Technology-assisted healthcare management."]
+];
+
+const RATE_CARD = {
+  doctor: {
+    "Dr. Yaswanth kumar": 800,
+    "Dr. Faizil": 500,
+    "Dr. Rabort": 600,
+    "Dr. Sreenu": 700,
+    "Dr. Prudhvi teja": 600
+  },
+  care: {
+    "OP": { roomPerDay: 0 },
+    "General Ward": { roomPerDay: 1000 },
+    "ICU": { roomPerDay: 5000 },
+    "Mortuary": { roomPerDay: 0 }
+  },
+  diagnosis: {
+    fever: { treatment: 200, medicine: 150, tests: 300 },
+    cold: { treatment: 150, medicine: 100, tests: 0 },
+    cough: { treatment: 200, medicine: 150, tests: 0 },
+    malaria: { treatment: 500, medicine: 400, tests: 800 },
+    dengue: { treatment: 500, medicine: 500, tests: 1000 },
+    fracture: { treatment: 1500, medicine: 300, tests: 1000 },
+    default: { treatment: 300, medicine: 200, tests: 0 }
+  }
+};
+
+let page = "home";
+let registrationType = "";
+let patient = {
+  name:"", age:"", gender:"", phone:"", disease:"", doctor:"",
+  admissionDate:"", dischargeDate:"", restDays:""
+};
+let charges = { treatment:0, room:0, doctor:0, medicine:0, other:0 };
+let payment = { amount:0, transactionId:"", status:"Pending" };
+let donation = { donor:"", amount:"", purpose:"", transaction:"" };
+
+function money(value) {
+  return Number(value || 0).toLocaleString("en-IN", { maximumFractionDigits: 2 });
+}
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[ch]));
+}
+function goTo(name) {
+  page = name;
+  render();
+  window.scrollTo({top:0, behavior:"instant"});
+}
+function totalAmount() {
+  return Object.values(charges).reduce((sum, value) => sum + Math.max(0, Number(value)||0), 0);
+}
+function balanceAmount() {
+  return Math.max(totalAmount() - Number(payment.amount || 0), 0);
+}
+function careDays() {
+  if (registrationType === "OP" || registrationType === "Mortuary") return 0;
+  if (patient.admissionDate && patient.dischargeDate) {
+    const start = new Date(patient.admissionDate + "T00:00:00");
+    const end = new Date(patient.dischargeDate + "T00:00:00");
+    if (!Number.isNaN(start.getTime()) && !Number.isNaN(end.getTime()) && end >= start) {
+      // Minimum one billable day; confirm local billing policy for real use.
+      return Math.max(1, Math.ceil((end - start) / 86400000));
+    }
+  }
+  return Math.max(1, Number(patient.restDays) || 1);
+}
+function matchingDiagnosis() {
+  const text = patient.disease.toLowerCase().trim();
+  const key = Object.keys(RATE_CARD.diagnosis).find(k => k !== "default" && text.includes(k));
+  return RATE_CARD.diagnosis[key || "default"];
+}
+function calculateAutomaticCharges() {
+  const type = registrationType;
+  const diseaseRate = matchingDiagnosis();
+  const doctorFee = RATE_CARD.doctor[patient.doctor] ?? 500;
+  const days = careDays();
+  charges.doctor = type === "Mortuary" ? 0 : doctorFee;
+  charges.room = (RATE_CARD.care[type]?.roomPerDay || 0) * days;
+  if (type === "Mortuary") {
+    charges.treatment = 0; charges.medicine = 0; charges.other = 0;
+  } else {
+    charges.treatment = diseaseRate.treatment;
+    charges.medicine = diseaseRate.medicine;
+    charges.other = diseaseRate.tests;
+  }
+}
+function navbar() {
+  return `
+  <header class="navbar">
+    <div class="logo" onclick="goTo('home')" role="button" tabindex="0" aria-label="FRSPY Hospital home">
+      <div class="logo-icon">✚</div><div><h2>FRSPY</h2><span>HOSPITAL</span></div>
+    </div>
+    <nav aria-label="Main navigation">
+      <button onclick="goTo('home')">Home</button>
+      <button onclick="goTo('doctors')">Doctors</button>
+      <button onclick="goTo('services')">Services</button>
+      <button onclick="goTo('about')">About</button>
+      <button onclick="goTo('donation')">Donation</button>
+    </nav>
+    <button class="nav-register" onclick="goTo('registerChoice')">Register Patient</button>
+  </header>`;
+}
+function homePage() {
+  return `
+  <section class="hero"><div>
+    <div class="small-label">WELCOME TO FRSPY HOSPITAL</div>
+    <h1>Modern Healthcare.<br><span>Human Care.</span></h1>
+    <p>Advanced healthcare services supported by modern technology, experienced doctors and compassionate patient care.</p>
+    <div class="hero-buttons">
+      <button class="primary-btn" onclick="goTo('registerChoice')">Register Patient →</button>
+      <button class="secondary-btn" onclick="goTo('about')">Discover More</button>
+    </div>
+    <div class="hero-stats">
+      <div><strong>24/7</strong><span>Emergency Care</span></div>
+      <div><strong>5+</strong><span>Listed Doctors</span></div>
+      <div><strong>OP / IP</strong><span>Patient Services</span></div>
+    </div>
+  </div><div class="hero-card">
+    <div class="medical-cross">✚</div><h3>We Care</h3>
+    <p>Your health, safety and comfort are at the heart of everything we do.</p>
+    <div class="care-item"><span>✓</span> Experienced Doctors</div>
+    <div class="care-item"><span>✓</span> Modern Facilities</div>
+    <div class="care-item"><span>✓</span> Patient-Focused Care</div>
+  </div></section>
+  <section class="quick-section">
+    <div><span>01</span><h3>Our Doctors</h3><p>Meet the medical professionals listed in this demo.</p><button class="text-btn" onclick="goTo('doctors')">View Doctors →</button></div>
+    <div><span>02</span><h3>Our Services</h3><p>Explore outpatient and inpatient care options.</p><button class="text-btn" onclick="goTo('services')">View Services →</button></div>
+    <div><span>03</span><h3>Support Healthcare</h3><p>Try the donation record form in this project.</p><button class="text-btn" onclick="goTo('donation')">Donate →</button></div>
+  </section>${aboutSection()}`;
+}
+function aboutSection() {
+  return `<section class="about"><div><div class="small-label">ABOUT FRSPY HOSPITAL</div>
+  <h1>Healthcare built around <span>people.</span></h1>
+  <p>FRSPY Hospital is a demonstration website combining patient registration, sample billing, doctor listings and technology-assisted hospital management.</p>
+  <p>For real clinical use, patient data, approved tariffs, clinical workflows and payment processing require secure, professionally reviewed systems.</p>
+  <button class="primary-btn" onclick="goTo('registerChoice')">Start Patient Registration →</button></div>
+  <div class="about-visual"><div class="big-cross">✚</div></div></section>`;
+}
+function doctorsPage() {
+  const cards = doctors.map(d => `<div class="doctor-card"><div class="doctor-avatar">${escapeHTML(d[0].replace("Dr. ","").charAt(0))}</div>
+    <h3>${escapeHTML(d[0])}</h3><strong>${escapeHTML(d[1])}</strong><p>${escapeHTML(d[2])}</p>
+    <button class="text-btn" onclick="selectDoctor('${escapeHTML(d[0])}')">Select Doctor →</button></div>`).join("");
+  return `<section class="page"><div class="page-heading"><span>OUR MEDICAL TEAM</span><h1>Doctors</h1><p>Demo doctor profiles and sample consultation fees.</p></div><div class="doctor-grid">${cards}</div></section>`;
+}
+function selectDoctor(name) {
+  patient.doctor = name;
+  goTo("registerChoice");
+}
+function servicesPage() {
+  const cards = services.map(s => `<div class="service-card"><div class="service-icon">${s[0]}</div><h3>${escapeHTML(s[1])}</h3><p>${escapeHTML(s[2])}</p><button class="text-btn" onclick="serviceAction('${escapeHTML(s[1])}')">Learn More →</button></div>`).join("");
+  return `<section class="page"><div class="page-heading"><span>HEALTHCARE SERVICES</span><h1>Our Services</h1><p>Healthcare service options for this demonstration.</p></div><div class="service-grid">${cards}</div></section>`;
+}
+function serviceAction(name) {
+  if (name === "General Ward" || name === "ICU") selectRegistration(name);
+  else if (name === "Emergency Care") selectRegistration("OP");
+  else alert(name + " information is a demo placeholder. Please confirm clinical services with authorized staff.");
+}
+function selectRegistration(type) {
+  registrationType = type;
+  goTo("registration");
+}
+function registrationChoicePage() {
+  const options = [
+    ["🩺","OP","Outpatient","Consultation and selected outpatient services."],
+    ["🛏️","General Ward","Inpatient","General ward admission and daily bed charges."],
+    ["❤️","ICU","Critical care","Intensive monitoring and daily ICU charges."],
+    ["🕊️","Mortuary","Mortuary","Mortuary record workflow; approved fees must be entered separately."]
+  ];
+  return `<section class="page"><div class="page-heading"><span>PATIENT REGISTRATION</span><h1>Choose Care Type</h1><p>Select the correct workflow to continue.</p></div>
+    <div class="registration-options">${options.map(o => `<button class="registration-option" onclick="selectRegistration('${escapeHTML(o[1])}')"><span>${o[0]}</span><h2>${escapeHTML(o[1])}</h2><p>${escapeHTML(o[3])}</p><strong>Register →</strong></button>`).join("")}</div></section>`;
+}
+function registrationPage() {
+  const op = registrationType === "OP";
+  const mortuary = registrationType === "Mortuary";
+  return `<section class="page"><div class="page-heading"><span>${escapeHTML(registrationType.toUpperCase())} REGISTRATION</span><h1>Patient Registration</h1><p>Enter the details below. This demo does not save data to a server.</p></div>
+  <div class="form-layout"><form class="hospital-form" onsubmit="submitRegistration(event)">
+    <div class="form-title"><span>Patient Information</span><strong>${escapeHTML(registrationType)}</strong></div>
+    <div class="form-grid">
+      <div class="field"><label for="pname">Patient Name</label><input id="pname" maxlength="100" required value="${escapeHTML(patient.name)}"></div>
+      <div class="field"><label for="page">Age</label><input id="page" type="number" min="0" max="125" required value="${escapeHTML(patient.age)}"></div>
+      <div class="field"><label for="pgender">Gender</label><select id="pgender" required><option value="">Select Gender</option>${["Male","Female","Other"].map(g=>`<option ${patient.gender===g?"selected":""}>${g}</option>`).join("")}</select></div>
+      <div class="field"><label for="pphone">Phone Number</label><input id="pphone" type="tel" inputmode="numeric" pattern="[0-9+() -]{7,18}" required value="${escapeHTML(patient.phone)}"></div>
+      <div class="field"><label for="pdisease">Disease / Diagnosis</label><input id="pdisease" maxlength="150" required value="${escapeHTML(patient.disease)}" placeholder="e.g. fever"></div>
+      <div class="field"><label for="pdoctor">Doctor</label><select id="pdoctor" required><option value="">Select Doctor</option>${doctors.map(d=>`<option value="${escapeHTML(d[0])}" ${patient.doctor===d[0]?"selected":""}>${escapeHTML(d[0])} — ${escapeHTML(d[1])}</option>`).join("")}</select></div>
+      <div class="field"><label for="pdate">${op || mortuary ? "Visit / Record Date" : "Admission Date"}</label><input id="pdate" type="date" required value="${escapeHTML(patient.admissionDate)}"></div>
+      ${!op && !mortuary ? `<div class="field"><label for="pdischarge">Discharge Date (optional)</label><input id="pdischarge" type="date" min="${escapeHTML(patient.admissionDate)}" value="${escapeHTML(patient.dischargeDate)}"></div>` : ""}
+      ${!op && !mortuary ? `<div class="field"><label for="prest">Expected Stay (days)</label><input id="prest" type="number" min="1" max="3650" required value="${escapeHTML(patient.restDays || "1")}"></div>` : ""}
+    </div>
+    <div class="medical-note"><strong>Important</strong><p>Diagnosis, treatment, tests and medicines must be confirmed by authorized clinical staff. Demo prices are not a medical recommendation or official hospital tariff.</p></div>
+    <button class="primary-btn full">Calculate Bill →</button>
+  </form><aside class="registration-summary"><h3>FRSPY Hospital</h3><p>Selected care: <strong>${escapeHTML(registrationType)}</strong></p>
+    <div class="summary-line"><span>Patient</span><strong>${escapeHTML(patient.name || "Not entered")}</strong></div>
+    <div class="summary-line"><span>Diagnosis</span><strong>${escapeHTML(patient.disease || "Not entered")}</strong></div>
+    <div class="summary-line"><span>Doctor</span><strong>${escapeHTML(patient.doctor || "Not selected")}</strong></div>
+    <div class="summary-line"><span>Sample consultation fee</span><strong>₹${money(RATE_CARD.doctor[patient.doctor] ?? 500)}</strong></div>
+  </aside></div></section>`;
+}
+function submitRegistration(e) {
+  e.preventDefault();
+  patient.name = document.getElementById("pname").value.trim();
+  patient.age = document.getElementById("page").value;
+  patient.gender = document.getElementById("pgender").value;
+  patient.phone = document.getElementById("pphone").value.trim();
+  patient.disease = document.getElementById("pdisease").value.trim();
+  patient.doctor = document.getElementById("pdoctor").value;
+  patient.admissionDate = document.getElementById("pdate").value;
+  patient.dischargeDate = document.getElementById("pdischarge")?.value || "";
+  patient.restDays = document.getElementById("prest")?.value || "0";
+  if (patient.dischargeDate && patient.dischargeDate < patient.admissionDate) {
+    alert("Discharge date cannot be earlier than admission date.");
+    return;
+  }
+  calculateAutomaticCharges();
+  payment = {amount:0, transactionId:"", status:"Pending"};
+  goTo("billing");
+}
+function chargeInput(label,name) {
+  return `<div class="charge-row"><label for="charge-${name}">${label}</label><div class="charge-input"><span>₹</span><input id="charge-${name}" type="number" min="0" max="100000000" step="1" value="${Number(charges[name]||0)}" onchange="updateCharge('${name}',this.value)" aria-label="${label} in rupees"></div></div>`;
+}
+function billingPage() {
+  const total = totalAmount();
+  return `<section class="page"><div class="page-heading"><span>HOSPITAL BILLING</span><h1>Treatment & Payment</h1><p>Review the automatically estimated charges. Adjust them to match approved services and tariffs.</p></div>
+  <div class="billing-layout"><div class="invoice-card">
+    <div class="invoice-header"><div><h2>FRSPY HOSPITAL</h2><p>We Care • We Heal • We Serve</p></div><span>${escapeHTML(registrationType)} BILL</span></div>
+    <div class="patient-mini">
+      <div><small>Patient</small><strong>${escapeHTML(patient.name)}</strong></div>
+      <div><small>Diagnosis</small><strong>${escapeHTML(patient.disease)}</strong></div>
+      <div><small>Doctor</small><strong>${escapeHTML(patient.doctor)}</strong></div>
+      <div><small>${registrationType==="OP"?"Visit Date":"Billable Days"}</small><strong>${registrationType==="OP"?escapeHTML(patient.admissionDate):money(careDays())}</strong></div>
+    </div>
+    ${chargeInput("Treatment Charges","treatment")}
+    ${chargeInput(registrationType==="OP"?"Facility / Room Charges":"Room / Ward Charges","room")}
+    ${chargeInput("Doctor / Consultation Fee","doctor")}
+    ${chargeInput("Medicine Charges","medicine")}
+    ${chargeInput(registrationType==="OP"?"Diagnostic / Other Services":"Diagnostic / Other Charges","other")}
+    <div class="total-row"><span>Total Amount</span><strong>₹${money(total)}</strong></div>
+    <div class="rate-note">Sample project rates only. Diagnosis keyword matching is a demo shortcut; it does not decide medical care. Confirm each charge before billing.</div>
+    <button class="secondary-btn full" onclick="goTo('registration')">← Edit Patient Details</button>
+  </div>
+  <form class="payment-card" onsubmit="completePayment(event)">
+    <div class="payment-icon">₹</div><h2>Record Payment</h2><p>Enter the amount actually received. This form does not charge a bank account or UPI.</p>
+    <div class="field"><label for="paymentAmount">Amount Paid (₹)</label><input id="paymentAmount" type="number" min="0.01" max="${Math.max(0,total)}" step="0.01" required value="${payment.amount || ""}"></div>
+    <div class="payment-summary">
+      <div><span>Total</span><strong>₹${money(total)}</strong></div>
+      <div><span>Paid after this entry</span><strong>₹${money(payment.amount)}</strong></div>
+      <div><span>Balance after this entry</span><strong>₹${money(Math.max(0,total-Number(payment.amount||0)))}</strong></div>
+    </div>
+    <button class="primary-btn full" type="submit">Record Payment →</button>
+    <p class="rate-note">To record a later installment, return to this page and enter the cumulative amount paid to date.</p>
+  </form></div></section>`;
+}
+function updateCharge(name,value) {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n < 0) { alert("Enter a valid non-negative charge."); render(); return; }
+  charges[name] = n;
+  render();
+}
+function completePayment(e) {
+  e.preventDefault();
+  const amount = Number(document.getElementById("paymentAmount").value);
+  const total = totalAmount();
+  if (!Number.isFinite(amount) || amount <= 0) { alert("Enter an amount greater than zero."); return; }
+  if (total <= 0) { alert("The total bill must be greater than zero before recording payment."); return; }
+  if (amount > total) { alert("Payment cannot exceed the total bill."); return; }
+  payment.amount = amount;
+  payment.transactionId = "DEMO-" + Math.floor(100000 + Math.random()*900000);
+  payment.status = amount >= total ? "Paid" : "Partial";
+  goTo("success");
+}
+function successPage() {
+  return `<section class="success-page"><div class="success-card">
+    <div class="success-check">${payment.status==="Paid"?"✓":"₹"}</div><span class="small-label">PAYMENT RECORD UPDATED</span>
+    <h1>${payment.status==="Paid"?"Payment Recorded":"Partial Payment Recorded"}</h1>
+    <p>This is a local demonstration record, not confirmation from a bank or payment provider.</p>
+    <div class="transaction-box"><span>Demo Reference ID</span><strong>${escapeHTML(payment.transactionId)}</strong></div>
+    <div class="success-details"><div><span>Patient</span><strong>${escapeHTML(patient.name)}</strong></div><div><span>Amount Paid</span><strong>₹${money(payment.amount)}</strong></div><div><span>Status</span><strong class="status ${payment.status==="Paid"?"paid":"partial"}">${escapeHTML(payment.status.toUpperCase())}</strong></div></div>
+    <div class="payment-summary"><div><span>Total Bill</span><strong>₹${money(totalAmount())}</strong></div><div><span>Balance Due</span><strong>₹${money(balanceAmount())}</strong></div></div>
+    <div class="success-buttons"><button class="primary-btn" onclick="goTo('receipt')">View Receipt</button><button class="secondary-btn" onclick="goTo('billing')">Back to Billing</button><button class="secondary-btn" onclick="goTo('home')">Home</button></div>
+  </div></section>`;
+}
+function receiptRow(label,name) {
+  return `<tr><td>${escapeHTML(label)}</td><td>₹${money(charges[name])}</td></tr>`;
+}
+function receiptPage() {
+  return `<section class="page receipt-page"><div class="receipt">
+    <div class="receipt-top"><div><h1>FRSPY HOSPITAL</h1><p>We Care • We Heal • We Serve</p></div><div class="receipt-status">${escapeHTML(payment.status.toUpperCase())}</div></div>
+    <div class="receipt-title"><h2>Hospital Payment Record</h2><span>${escapeHTML(payment.transactionId)}</span></div>
+    <div class="receipt-patient">
+      <div><small>Patient Name</small><strong>${escapeHTML(patient.name)}</strong></div>
+      <div><small>Age / Gender</small><strong>${escapeHTML(patient.age)} / ${escapeHTML(patient.gender)}</strong></div>
+      <div><small>Diagnosis</small><strong>${escapeHTML(patient.disease)}</strong></div>
+      <div><small>Doctor</small><strong>${escapeHTML(patient.doctor)}</strong></div>
+      <div><small>Care Type</small><strong>${escapeHTML(registrationType)}</strong></div>
+      <div><small>Billable Days</small><strong>${registrationType==="OP"?"N/A":money(careDays())}</strong></div>
+    </div>
+    <table><thead><tr><th>Description</th><th>Amount</th></tr></thead><tbody>
+      ${receiptRow("Treatment Charges","treatment")}${receiptRow("Room / Ward Charges","room")}${receiptRow("Doctor / Consultation Fee","doctor")}${receiptRow("Medicine Charges","medicine")}${receiptRow("Diagnostic / Other Charges","other")}
+    </tbody><tfoot><tr><th>Total</th><th>₹${money(totalAmount())}</th></tr><tr><th>Paid</th><th>₹${money(payment.amount)}</th></tr><tr><th>Balance</th><th>₹${money(balanceAmount())}</th></tr></tfoot></table>
+    <div class="receipt-footer"><div><strong>Demo Reference ID</strong><span>${escapeHTML(payment.transactionId)}</span></div><div><strong>Record Status</strong><span>${escapeHTML(payment.status)}</span></div></div>
+    <div class="receipt-message">This is a demonstration receipt, not a tax invoice or verified payment confirmation.<br><strong>We Care • We Heal • We Serve</strong></div>
+    <button class="primary-btn print-btn" onclick="window.print()">🖨 Print Receipt</button>
+    <button class="secondary-btn no-print" onclick="goTo('home')">Back Home</button>
+  </div></section>`;
+}
+function donationPage() {
+  if (donation.transaction) return `<section class="page"><div class="page-heading"><span>SUPPORT HEALTHCARE</span><h1>Donation Recorded</h1></div><div class="success-card"><div class="success-check">✓</div><h2>Thank You, ${escapeHTML(donation.donor)}</h2><div class="transaction-box"><span>Demo Donation Reference</span><strong>${escapeHTML(donation.transaction)}</strong></div><h2>₹${money(donation.amount)}</h2><p>Purpose: ${escapeHTML(donation.purpose)}</p><p>This records a demo entry only; no money was transferred.</p><button class="primary-btn" onclick="donation.transaction='';goTo('home')">Back Home</button></div></section>`;
+  return `<section class="page"><div class="page-heading"><span>SUPPORT HEALTHCARE</span><h1>Make a Donation</h1><p>Record a sample donation entry for the project.</p></div>
+  <form class="donation-card" onsubmit="submitDonation(event)"><div class="donation-symbol">♥</div><h2>Support FRSPY Hospital</h2>
+    <div class="field"><label for="donor">Donor Name</label><input id="donor" maxlength="100" required></div>
+    <div class="field"><label for="donationAmount">Donation Amount (₹)</label><input id="donationAmount" type="number" min="1" max="100000000" step="1" required></div>
+    <div class="field"><label for="purpose">Donation Purpose</label><select id="purpose" required><option value="">Select Purpose</option><option>Patient Care</option><option>Medical Equipment</option><option>Emergency Support</option><option>General Hospital Support</option></select></div>
+    <button class="primary-btn full">Record Demo Donation →</button></form></section>`;
+}
+function submitDonation(e) {
+  e.preventDefault();
+  donation.donor = document.getElementById("donor").value.trim();
+  donation.amount = document.getElementById("donationAmount").value;
+  donation.purpose = document.getElementById("purpose").value;
+  donation.transaction = "DEMO-DON-" + Math.floor(100000 + Math.random()*900000);
+  render();
+}
+function footer() {
+  return `<footer><div><h2>FRSPY HOSPITAL</h2><p>Modern healthcare with compassionate care.</p></div><div><strong>We Care • We Heal • We Serve</strong><p>© 2026 FRSPY Hospital</p><small>Student demo project — not for real clinical or payment use.</small></div></footer>`;
+}
+function render() {
+  let content = "";
+  switch(page) {
+    case "home": content = homePage(); break;
+    case "doctors": content = doctorsPage(); break;
+    case "services": content = servicesPage(); break;
+    case "about": content = `<section class="page">${aboutSection()}</section>`; break;
+    case "donation": content = donationPage(); break;
+    case "registerChoice": content = registrationChoicePage(); break;
+    case "registration": content = registrationPage(); break;
+    case "billing": content = billingPage(); break;
+    case "success": content = successPage(); break;
+    case "receipt": content = receiptPage(); break;
+    default: content = homePage();
+  }
+  document.getElementById("app").innerHTML = navbar() + content + footer();
+}
+render();
+</script>
+</body>
+</html>
